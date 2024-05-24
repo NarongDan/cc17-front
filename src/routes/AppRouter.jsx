@@ -7,6 +7,7 @@ import {
 import Header from "../layout/Header";
 import LoginForm from "../layout/LoginForm";
 import RegisterForm from "../layout/RegisterForm";
+import useAuth from "../hooks/useAuth";
 
 const guestRouter = createBrowserRouter([
   {
@@ -25,6 +26,25 @@ const guestRouter = createBrowserRouter([
   },
 ]);
 
+const userRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        <Header />
+        <Outlet />
+      </>
+    ),
+    errorElement: <Navigate to="/" />,
+    children: [
+      { index: true, element: <p>UserHome</p> },
+      { path: "/newtodo", element: <p>New Todo</p> },
+    ],
+  },
+]);
+
 export default function AppRouter() {
-  return <RouterProvider router={guestRouter} />;
+  const { user } = useAuth();
+  const finalRouter = user?.id ? userRouter : guestRouter;
+  return <RouterProvider router={finalRouter} />;
 }

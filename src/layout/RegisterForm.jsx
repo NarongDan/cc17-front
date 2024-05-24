@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 export default function RegisterForm() {
   const [input, setInput] = useState({
     username: "",
@@ -8,6 +10,8 @@ export default function RegisterForm() {
     confirmPassword: "",
     email: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -25,7 +29,12 @@ export default function RegisterForm() {
       }
       // จัด input ส่ง api
       const rs = await axios.post("http://localhost:8889/auth/register", input);
-      console.log(rs);
+
+      if (rs.status === 200) {
+        alert("Register successful");
+      }
+
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
