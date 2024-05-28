@@ -8,6 +8,7 @@ import Header from "../layout/Header";
 import LoginForm from "../layout/LoginForm";
 import RegisterForm from "../layout/RegisterForm";
 import useAuth from "../hooks/useAuth";
+import UserHome from "../layout/UserHome";
 
 const guestRouter = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const userRouter = createBrowserRouter([
     ),
     errorElement: <Navigate to="/" />,
     children: [
-      { index: true, element: <p>UserHome</p> },
+      { index: true, element: <UserHome /> },
       { path: "/newtodo", element: <p>New Todo</p> },
     ],
   },
